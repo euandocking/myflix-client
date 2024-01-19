@@ -3,10 +3,12 @@ import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-ro
 import Login from './Login';
 import Register from './Register';
 import Home from './Home';
+import VideoPage from './components/VideoPage';
+import AddVideo from './components/AddVideo';
 import { useAuth } from './AuthContext';
 
 const App = () => {
-    const { user, isAuthenticated, logout } = useAuth();
+    const { isAuthenticated, logout } = useAuth();
 
     return (
         <Router>
@@ -29,6 +31,12 @@ const App = () => {
                                     <Link to="/home">Home</Link>
                                 </li>
                                 <li>
+                                    <Link to="/video-catalog">Video Catalog</Link>
+                                </li>
+                                <li>
+                                    <Link to="/add-video">Add Video</Link>
+                                </li>
+                                <li>
                                     <button onClick={logout}>Logout</button>
                                 </li>
                             </>
@@ -43,7 +51,11 @@ const App = () => {
                     />
                     <Route path="/register" element={<Register />} />
                     {isAuthenticated() && (
-                        <Route path="/home" element={<Home />} />
+                        <>
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/video-catalog" element={<VideoPage />} />
+                            <Route path="/add-video" element={<AddVideo />} />
+                        </>
                     )}
                     <Route
                         path="/*"
