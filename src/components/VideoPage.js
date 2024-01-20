@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchVideos } from '../videoApi';
+import './VideoPage.css'; // Import the CSS file
 
 const VideoPage = () => {
   const [videos, setVideos] = useState([]);
@@ -21,16 +22,16 @@ const VideoPage = () => {
   return (
     <div>
       <h1>Video Catalog</h1>
-      <ul>
+      <div className="flexContainer">
         {videos.map((video) => (
-          <li key={video._id}>
-            <Link to={`/videos/${video._id}`}>
+          <Link to={`/videos/${video._id}`} key={video._id} className="videoContainer">
+            <img src={video.thumbnailUrl} alt={video.title} className="thumbnail" />
+            <div>
               <h2>{video.title}</h2>
-              <p>{video.description}</p>
-            </Link>
-          </li>
+            </div>
+          </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
