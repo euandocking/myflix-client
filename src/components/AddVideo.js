@@ -4,6 +4,8 @@ import { addVideo } from '../videoApi'; // Import the addVideo function
 const AddVideo = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [thumbnailUrl, setThumbnailUrl] = useState(''); // New state for thumbnail URL
+  const [videoUrl, setVideoUrl] = useState(''); // New state for video URL
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -13,12 +15,22 @@ const AddVideo = () => {
     setDescription(e.target.value);
   };
 
+  const handleThumbnailUrlChange = (e) => {
+    setThumbnailUrl(e.target.value);
+  };
+
+  const handleVideoUrlChange = (e) => {
+    setVideoUrl(e.target.value);
+  };
+
   const handleAddVideo = async () => {
     try {
       // Use the addVideo function from the API module
       const videoData = {
         title,
         description,
+        thumbnailUrl, // Include thumbnail URL in video data
+        videoUrl, // Include video URL in video data
         // Add any other video-related data you want to send to the server
       };
 
@@ -52,6 +64,16 @@ const AddVideo = () => {
         <label>
           Description:
           <textarea value={description} onChange={handleDescriptionChange} />
+        </label>
+        <br />
+        <label>
+          Thumbnail URL:
+          <input type="text" value={thumbnailUrl} onChange={handleThumbnailUrlChange} />
+        </label>
+        <br />
+        <label>
+          Video URL:
+          <input type="text" value={videoUrl} onChange={handleVideoUrlChange} />
         </label>
         <br />
         <button type="button" onClick={handleAddVideo}>

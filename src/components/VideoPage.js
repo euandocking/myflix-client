@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchVideos } from '../videoApi';
 
 const VideoPage = () => {
@@ -23,8 +24,10 @@ const VideoPage = () => {
       <ul>
         {videos.map((video) => (
           <li key={video._id}>
-            <h2>{video.title}</h2>
-            <p>{video.description}</p>
+            <Link to={`/videos/${video._id}`}>
+              <h2>{video.title}</h2>
+              <p>{video.description}</p>
+            </Link>
           </li>
         ))}
       </ul>

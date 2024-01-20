@@ -25,3 +25,13 @@ export const addVideo = async (videoData) => {
     throw error;
   }
 };
+
+export const fetchVideo = async (videoId) => {
+  try {
+    const response = await api.get(`/api/videos/${videoId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching video with id ${videoId}:`, error);
+    throw error;
+  }
+};
