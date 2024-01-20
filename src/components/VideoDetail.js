@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchVideo } from '../videoApi'; // Assuming you have a fetchVideo function in your videoApi
+import { fetchVideo } from '../videoApi';
+import './VideoDetail.css'; // Import the CSS file
 
 const VideoDetail = () => {
   const { videoId } = useParams();
@@ -24,11 +25,25 @@ const VideoDetail = () => {
   }
 
   return (
-    <div>
-      <h1>{video.title}</h1>
-      <p>{video.description}</p>
-      <p>Video URL: {video.videoUrl}</p>
-      {video.thumbnailUrl && <img src={video.thumbnailUrl} alt="Thumbnail" />}
+    <div className="video-detail-container">
+      <iframe
+        className="video-player"
+        src={video.videoUrl}
+        title={video.title}
+        frameBorder="0"
+        allowFullScreen
+      ></iframe>
+
+      <div className="video-details">
+        {video.thumbnailUrl && (
+          <img className="thumbnail" src={video.thumbnailUrl} alt="Thumbnail" />
+        )}
+
+        <div className="title-description">
+          <h1>{video.title}</h1>
+          <p>{video.description}</p>
+        </div>
+      </div>
     </div>
   );
 };
