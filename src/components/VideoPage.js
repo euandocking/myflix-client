@@ -21,9 +21,11 @@ const VideoPage = () => {
 
   // Organize videos by category
   const videosByCategory = videos.reduce((acc, video) => {
-    const category = video.category || 'Uncategorized';
-    acc[category] = acc[category] || [];
-    acc[category].push(video);
+    const categories = video.categories || ['Uncategorized'];  // Use an array for categories
+    categories.forEach(category => {
+      acc[category] = acc[category] || [];
+      acc[category].push(video);
+    });
     return acc;
   }, {});
 
