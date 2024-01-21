@@ -19,19 +19,32 @@ const VideoPage = () => {
     fetchData();
   }, []);
 
+  // Organize videos by category
+  const videosByCategory = videos.reduce((acc, video) => {
+    const category = video.category || 'Uncategorized';
+    acc[category] = acc[category] || [];
+    acc[category].push(video);
+    return acc;
+  }, {});
+
   return (
     <div>
       <h1>Video Catalog</h1>
-      <div className="flexContainer">
-        {videos.map((video) => (
-          <Link to={`/videos/${video._id}`} key={video._id} className="videoContainer">
-            <img src={video.thumbnailUrl} alt={video.title} className="thumbnail" />
-            <div>
-              <h2>{video.title}</h2>
-            </div>
-          </Link>
-        ))}
-      </div>
+      {Object.entries(videosByCategory).map(([category, categoryVideos]) => (
+        <div key={category}>
+          <h2>{category}</h2>
+          <div className="flexContainer">
+            {categoryVideos.map((video) => (
+              <Link to={`/videos/${video._id}`} key={video._id} className="videoContainer">
+                <img src={video.thumbnailUrl} alt={video.title} className="thumbnail" />
+                <div>
+                  <h3>{video.title}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

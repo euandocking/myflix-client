@@ -6,6 +6,7 @@ const AddVideo = () => {
   const [description, setDescription] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState(''); // New state for thumbnail URL
   const [videoUrl, setVideoUrl] = useState(''); // New state for video URL
+  const [category, setCategory] = useState(''); // New state for video URL
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -23,6 +24,10 @@ const AddVideo = () => {
     setVideoUrl(e.target.value);
   };
 
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+
   const handleAddVideo = async () => {
     try {
       // Use the addVideo function from the API module
@@ -31,6 +36,7 @@ const AddVideo = () => {
         description,
         thumbnailUrl, // Include thumbnail URL in video data
         videoUrl, // Include video URL in video data
+        category,
         // Add any other video-related data you want to send to the server
       };
 
@@ -74,6 +80,11 @@ const AddVideo = () => {
         <label>
           Video URL:
           <input type="text" value={videoUrl} onChange={handleVideoUrlChange} />
+        </label>
+        <br />
+        <label>
+          Category:
+          <input type="text" value={category} onChange={handleCategoryChange} />
         </label>
         <br />
         <button type="button" onClick={handleAddVideo}>
