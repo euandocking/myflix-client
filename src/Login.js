@@ -11,22 +11,22 @@ const Login = () => {
 
     const loginUser = async () => {
         try {
-            // Make a request to your server for authentication
-            const response = await userApi.post('/api/login', { username, password });
-
-            // Assuming your server returns a token upon successful login
-            const token = response.data.token;
-
-            // Call the login function to set the user and token in the context
-            login(token);
-
-            // Redirect to the home page after successful login
-            navigate('/home');
+          // Make a request to your server for authentication
+          const response = await userApi.post('/api/login', { username, password });
+      
+          // Assuming your server returns both user ID and token upon successful login
+          const { userId, token } = response.data;
+      
+          // Call the login function to set the user and token in the context
+          login(token, userId);
+      
+          // Redirect to the home page after successful login
+          navigate('/home');
         } catch (error) {
-            console.error('Error during login:', error);
-            alert('Login failed. Please check your username and password.');
+          console.error('Error during login:', error);
+          alert('Login failed. Please check your username and password.');
         }
-    };
+      };
 
     return (
         <div>
