@@ -26,5 +26,5 @@ jobs:
           docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/myflix-client:latest --push .
           
     env:
-      DOCKERHUB_USERNAME: yourdockerhubusername
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
