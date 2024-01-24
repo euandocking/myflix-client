@@ -29,6 +29,9 @@ jobs:
         id: extract-ip
         run: echo "::set-output name=ip::$(echo ${{ secrets.SERVER_SECRET }} | cut -d@ -f2)"
 
+      - name: Create ~/.ssh directory
+        run: mkdir -p ~/.ssh
+
       - name: Add SSH key to known_hosts
         run: ssh-keyscan -H ${{ steps.extract-ip.outputs.ip }} >> ~/.ssh/known_hosts
 
