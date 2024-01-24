@@ -1,53 +1,59 @@
 /* VideoPage.css */
 
+/* Star rating styles (unchanged) */
 .star-rating {
   display: inline-block;
 }
 
 .full-star::before {
-  content: '\2605'; /* Unicode character for a solid star */
+  content: '\2605';
 }
 
 .half-star::before {
-  content: '\2605'; /* Unicode character for a solid star */
+  content: '\2605';
   position: relative;
   display: inline-block;
   overflow: hidden;
   width: 0.5em;
-  vertical-align: text-bottom; /* Adjust vertical alignment */
+  vertical-align: text-bottom;
 }
 
-/* Adjust the color for the stars to match your styling */
 .star {
   font-size: 1.5em;
-  color: #ff0000;; /* Use your desired color */
+  color: #ff0000;
   margin-right: 2px;
 }
 
 .empty-star::before {
-  content: '\2606'; /* Unicode character for an empty star */
+  content: '\2606';
 }
 
+/* Flex container styles (unchanged) */
 .flexContainer {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: hidden; /* Hide the native scroll bar */
+  overflow-x: hidden;
   padding-bottom: 10px;
 }
 
+/* Video container styles */
 .videoContainer {
   width: 200px;
   margin: 10px;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #333;
+  border-radius: 5px;
+  background-color: #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease-in-out;
 }
 
 .videoContainer:hover {
   transform: scale(1.05);
+}
+
+.videoContainer h3 {
+  color: #fff; /* Set the color of video titles to white */
 }
 
 .thumbnail {
@@ -57,6 +63,7 @@
   border-radius: 8px;
 }
 
+/* Heading styles (unchanged) */
 h2 {
   margin-top: 20px;
   font-size: 18px;
@@ -64,6 +71,7 @@ h2 {
   text-align: center;
 }
 
+/* Navigation arrow styles (unchanged) */
 .nav-arrows {
   display: flex;
   justify-content: space-between;
@@ -76,12 +84,12 @@ h2 {
   border: none;
   padding: 10px;
   cursor: pointer;
-  border-radius: 50%; /* Round the button */
+  border-radius: 50%;
   font-size: 20px;
-  transition: background-color 0.3s; /* Add a smooth transition effect */
+  transition: background-color 0.3s;
 }
 
 .nav-arrows button:hover {
   background-color: #cc0000;
-  transform: scale(1.1); /* Scale up on hover */
+  transform: scale(1.1);
 }
