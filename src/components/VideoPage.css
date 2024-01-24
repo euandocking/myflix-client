@@ -1,5 +1,33 @@
 /* VideoPage.css */
 
+.star-rating {
+  display: inline-block;
+}
+
+.full-star::before {
+  content: '\2605'; /* Unicode character for a solid star */
+}
+
+.half-star::before {
+  content: '\2605'; /* Unicode character for a solid star */
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 0.5em;
+  vertical-align: text-bottom; /* Adjust vertical alignment */
+}
+
+/* Adjust the color for the stars to match your styling */
+.star {
+  font-size: 1.5em;
+  color: #ff0000;; /* Use your desired color */
+  margin-right: 2px;
+}
+
+.empty-star::before {
+  content: '\2606'; /* Unicode character for an empty star */
+}
+
 .flexContainer {
   display: flex;
   flex-wrap: nowrap;

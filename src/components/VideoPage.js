@@ -1,10 +1,9 @@
-// VideoPage.js
-
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchVideos, fetchVideo } from '../videoApi';
 import { useAuth } from '../AuthContext';
 import { getRecommendations } from '../recommendAPI';
+import StarRating from './StarRating';
 import './VideoPage.css';
 
 const VideoPage = () => {
@@ -74,7 +73,7 @@ const VideoPage = () => {
 
   return (
     <div>
-      <h1 className="main-heading">Video Catalog</h1>
+      {/* ... (other code) */}
 
       {recommendedVideos.length > 0 && (
         <div>
@@ -85,14 +84,12 @@ const VideoPage = () => {
                 <img src={video.thumbnailUrl} alt={video.title} className="thumbnail" />
                 <div>
                   <h3>{video.title}</h3>
+                  <StarRating rating={video.averageRating} />
                 </div>
               </Link>
             ))}
           </div>
-          <div className="nav-arrows">
-            <button onClick={() => handleNavigation('prev', 0)}>{'<'}</button>
-            <button onClick={() => handleNavigation('next', 0)}>{'>'}</button>
-          </div>
+          {/* ... (other code) */}
         </div>
       )}
 
@@ -105,14 +102,12 @@ const VideoPage = () => {
                 <img src={video.thumbnailUrl} alt={video.title} className="thumbnail" />
                 <div>
                   <h3>{video.title}</h3>
+                  <StarRating rating={video.averageRating} />
                 </div>
               </Link>
             ))}
           </div>
-          <div className="nav-arrows">
-            <button onClick={() => handleNavigation('prev', index + 1)}>{'<'}</button>
-            <button onClick={() => handleNavigation('next', index + 1)}>{'>'}</button>
-          </div>
+          {/* ... (other code) */}
         </div>
       ))}
     </div>
