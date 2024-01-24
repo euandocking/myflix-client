@@ -29,23 +29,6 @@ export const fetchVideos = async () => {
   }
 };
 
-export const addVideo = async (videoData) => {
-  try {
-    const token = getAuthToken();
-
-    const response = await api.post('/api/videos', videoData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error('Error adding video:', error);
-    throw error;
-  }
-};
-
 export const fetchVideo = async (videoId) => {
   try {
     const token = getAuthToken();

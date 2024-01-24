@@ -2,10 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate, useLocation } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
-import Home from './Home';
 import VideoPage from './components/VideoPage';
 import VideoDetail from './components/VideoDetail';
-import AddVideo from './components/AddVideo';
 import { useAuth } from './AuthContext';
 import './App.css';
 
@@ -21,13 +19,15 @@ const App = () => {
 
         <nav className="nav-bar">
           <ul className="nav-list">
-            <NavItem to="/login" text="Login" />
-            <NavItem to="/register" text="Register" />
+            {!isAuthenticated() && (
+              <>
+                <NavItem to="/login" text="Login" />
+                <NavItem to="/register" text="Register" />
+              </>
+            )}
             {isAuthenticated() && (
               <>
-                <NavItem to="/home" text="Home" />
                 <NavItem to="/video-catalog" text="Video Catalog" />
-                <NavItem to="/add-video" text="Add Video" />
               </>
             )}
           </ul>
@@ -36,21 +36,18 @@ const App = () => {
         <Routes>
           <Route
             path="/login"
-            element={!isAuthenticated() ? <Login /> : <Navigate to="/home" />}
+            element={!isAuthenticated() ? <Login /> : <Navigate to="/video-catalog" />}
           />
           <Route path="/register" element={<Register />} />
           {isAuthenticated() && (
             <>
-              <Route path="/home" element={<Home />} />
               <Route path="/video-catalog" element={<VideoPage />} />
-              <Route path="/add-video" element={<AddVideo />} />
-              {/* Add the VideoDetail route */}
               <Route path="/videos/:videoId" element={<VideoDetail />} />
             </>
           )}
           <Route
             path="/*"
-            element={!isAuthenticated() ? <Navigate to="/login" /> : <Navigate to="/home" />}
+            element={isAuthenticated() ? <Navigate to="/video-catalog" /> : <Navigate to="/login" />}
           />
         </Routes>
       </div>
