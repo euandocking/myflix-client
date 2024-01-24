@@ -28,8 +28,19 @@ jobs:
       - name: Update Docker Swarm Service
         run: |
           # Extract the server and private key from secrets
-          SERVER=$([[ ${{ secrets.SERVER_SECRET }} =~ ^"ssh://(.*)"$ ]] && echo ${BASH_REMATCH[1]})
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          SERVER_SECRET=${{ secrets.SERVER_SECRET }}
+          
+          # Check if the server secret is in the correct format
+          if [[ $SERVER_SECRET =~ ^([^@]+)@(.+)$ ]]; then
+            USER=${BASH_REMATCH[1]}
+            SERVER=${BASH_REMATCH[2]}
+          else
+            echo "Error: SERVER_SECRET is not in the correct format (user@your-server)"
+            exit 1
+          fi
 
           # Set up SSH and update the Docker Swarm service
-          ssh -i private_key.pem $SERVER "docker service update --image ${{ secrets.DOCKERHUB_USERNAME }}/myflix-client:latest myflix"
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          ssh -i private_key.pem $USER@$SERVER "docker service update --image ***/myflix-client:latest myflix"
+
