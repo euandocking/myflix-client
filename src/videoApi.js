@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuth } from './AuthContext'; // Update the path accordingly
 
 const API_URL = process.env.REACT_APP_VIDEO_API;
 
@@ -18,7 +19,11 @@ export const fetchVideos = async () => {
 
 export const addVideo = async (videoData) => {
   try {
-    const response = await api.post('/api/videos', videoData);
+    const { getAuthToken } = useAuth(); // Retrieve the useAuth hook from your AuthContext
+    const token = getAuthToken(); // Retrieve the JWT
+    const response = await api.post('/api/videos', videoData, {
+      headers: { Authorization: token },
+    });
     return response.data;
   } catch (error) {
     console.error('Error adding video:', error);
@@ -28,7 +33,11 @@ export const addVideo = async (videoData) => {
 
 export const fetchVideo = async (videoId) => {
   try {
-    const response = await api.get(`/api/videos/${videoId}`);
+    const { getAuthToken } = useAuth(); // Retrieve the useAuth hook from your AuthContext
+    const token = getAuthToken(); // Retrieve the JWT
+    const response = await api.get(`/api/videos/${videoId}`, {
+      headers: { Authorization: token },
+    });
     return response.data;
   } catch (error) {
     console.error(`Error fetching video with id ${videoId}:`, error);
