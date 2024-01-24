@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import userApi from './userApi';
+import './AuthStyles.css'; // Import the CSS file for styling
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -29,22 +30,26 @@ const Login = () => {
       };
 
     return (
-        <div>
-            <h1>Login Page</h1>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={loginUser}>Login</button>
-        </div>
+      <div className="auth-container">
+        <h1 className="auth-heading">Login Page</h1>
+        <input
+          className="auth-input"
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          className="auth-input"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="auth-button" onClick={loginUser}>
+          Login
+        </button>
+      </div>
     );
 };
 

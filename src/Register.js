@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import userApi from './userApi';
+import './AuthStyles.css'; // Import the CSS file for styling
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -19,21 +20,25 @@ const Register = () => {
     };
 
     return (
-        <div>
-            <h1>Registration Page</h1>
+        <div className="auth-container">
+            <h1 className="auth-heading">Registration Page</h1>
             <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+            className="auth-input"
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             />
             <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+            className="auth-input"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={registerUser}>Register User</button>
+            <button className="auth-button" onClick={registerUser}>
+            Register User
+            </button>
         </div>
     );
 };

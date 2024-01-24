@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate, useLocation } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import Home from './Home';
@@ -7,38 +7,31 @@ import VideoPage from './components/VideoPage';
 import VideoDetail from './components/VideoDetail';
 import AddVideo from './components/AddVideo';
 import { useAuth } from './AuthContext';
+import './App.css';
 
 const App = () => {
   const { isAuthenticated, logout } = useAuth();
 
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            {!isAuthenticated() && (
-              <>
-                <li>
-                  <Link to="/login">Login</Link>
-                </li>
-                <li>
-                  <Link to="/register">Register</Link>
-                </li>
-              </>
-            )}
+      <div className="app-container">
+        <header>
+          <h1 className="app-heading">MyFlix</h1>
+        </header>
+
+        <nav className="nav-bar">
+          <ul className="nav-list">
+            <NavItem to="/login" text="Login" />
+            <NavItem to="/register" text="Register" />
             {isAuthenticated() && (
               <>
+                <NavItem to="/home" text="Home" />
+                <NavItem to="/video-catalog" text="Video Catalog" />
+                <NavItem to="/add-video" text="Add Video" />
                 <li>
-                  <Link to="/home">Home</Link>
-                </li>
-                <li>
-                  <Link to="/video-catalog">Video Catalog</Link>
-                </li>
-                <li>
-                  <Link to="/add-video">Add Video</Link>
-                </li>
-                <li>
-                  <button onClick={logout}>Logout</button>
+                  <button className="logout-button" onClick={logout}>
+                    Logout
+                  </button>
                 </li>
               </>
             )}
@@ -67,6 +60,17 @@ const App = () => {
         </Routes>
       </div>
     </Router>
+  );
+};
+
+const NavItem = ({ to, text }) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
+  return (
+    <li className={isActive ? 'active' : ''}>
+      <Link to={to}>{text}</Link>
+    </li>
   );
 };
 
