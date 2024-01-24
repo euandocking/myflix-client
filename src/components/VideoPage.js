@@ -89,7 +89,10 @@ const VideoPage = () => {
               </Link>
             ))}
           </div>
-          {/* ... (other code) */}
+          <div className="nav-arrows">
+            <button onClick={() => handleNavigation('prev', 0)}>{'<'}</button>
+            <button onClick={() => handleNavigation('next', 0)}>{'>'}</button>
+          </div>
         </div>
       )}
 
@@ -107,7 +110,10 @@ const VideoPage = () => {
               </Link>
             ))}
           </div>
-          {/* ... (other code) */}
+          <div className="nav-arrows">
+            <button onClick={() => handleNavigation('prev', index + 1)}>{'<'}</button>
+            <button onClick={() => handleNavigation('next', index + 1)}>{'>'}</button>
+          </div>
         </div>
       ))}
     </div>
