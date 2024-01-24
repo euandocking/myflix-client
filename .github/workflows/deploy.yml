@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REPO_NAME: euandocking/myflix-client
+      REPO_NAME: myflix-client
 
     steps:
       - name: Checkout Repository
