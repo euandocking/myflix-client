@@ -6,9 +6,22 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
+// Function to get the JWT token from wherever you have stored it (localStorage, Redux store, etc.)
+const getAuthToken = () => {
+  // Retrieve the token from where you store it
+  // For example, if you store it in localStorage:
+  return localStorage.getItem('token');
+};
+
 export const fetchVideos = async () => {
   try {
-    const response = await api.get('/api/videos');
+    const token = getAuthToken();
+    const response = await api.get('/api/videos', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error('Error fetching videos:', error);
@@ -18,7 +31,14 @@ export const fetchVideos = async () => {
 
 export const addVideo = async (videoData) => {
   try {
-    const response = await api.post('/api/videos', videoData);
+    const token = getAuthToken();
+
+    const response = await api.post('/api/videos', videoData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error('Error adding video:', error);
@@ -28,7 +48,14 @@ export const addVideo = async (videoData) => {
 
 export const fetchVideo = async (videoId) => {
   try {
-    const response = await api.get(`/api/videos/${videoId}`);
+    const token = getAuthToken();
+
+    const response = await api.get(`/api/videos/${videoId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error(`Error fetching video with id ${videoId}:`, error);
