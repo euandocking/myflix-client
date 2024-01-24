@@ -25,6 +25,13 @@ jobs:
           docker buildx inspect --bootstrap
           docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/myflix-client:latest --push .
 
+      - name: Extract IP from SERVER_SECRET
+        id: extract-ip
+        run: echo "::set-output name=ip::$(echo ${{ secrets.SERVER_SECRET }} | cut -d@ -f2)"
+
+      - name: Add SSH key to known_hosts
+        run: ssh-keyscan -H ${{ steps.extract-ip.outputs.ip }} >> ~/.ssh/known_hosts
+
       - name: Update Docker Swarm Service
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
