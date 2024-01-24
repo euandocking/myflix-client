@@ -39,4 +39,4 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
-          ssh -i private_key.pem ${{ secrets.SERVER_SECRET }} "docker service update --image ${{ secrets.DOCKERHUB_USERNAME }}/myflix-client:latest myflix"
+          ssh -i private_key.pem ${{ secrets.SERVER_SECRET }} "docker service update --image ${{ secrets.DOCKERHUB_USERNAME }}/myflix-client:latest myflix_myflix-client"
