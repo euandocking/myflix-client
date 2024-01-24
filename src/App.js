@@ -28,11 +28,6 @@ const App = () => {
                 <NavItem to="/home" text="Home" />
                 <NavItem to="/video-catalog" text="Video Catalog" />
                 <NavItem to="/add-video" text="Add Video" />
-                <li>
-                  <button className="logout-button" onClick={logout}>
-                    Logout
-                  </button>
-                </li>
               </>
             )}
           </ul>

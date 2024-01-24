@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+// VideoPage.js
+
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchVideos, fetchVideo } from '../videoApi';
-import { useAuth } from '../AuthContext'; // Update the path to your AuthContext
+import { useAuth } from '../AuthContext';
 import { getRecommendations } from '../recommendAPI';
-import './VideoPage.css'; // Import the CSS file
+import './VideoPage.css';
 
 const VideoPage = () => {
   const [videos, setVideos] = useState([]);
-  const { user } = useAuth(); // Use the useAuth hook to access user information
+  const { user } = useAuth();
   const [recommendedVideos, setRecommendedVideos] = useState([]);
+  const containerRefs = useRef([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,7 +19,7 @@ const VideoPage = () => {
         const data = await fetchVideos();
         setVideos(data);
       } catch (error) {
-        // Handle error
+        console.error('Error fetching videos:', error);
       }
     };
 
@@ -27,32 +30,42 @@ const VideoPage = () => {
     const fetchRecommendations = async () => {
       try {
         if (user && user.userId) {
-          console.log('User ID:', user.userId);
-
-          // Make the HTTP request using the recommendAPI function
           const recommendedVideoIds = await getRecommendations(user.userId);
-
-          // Fetch detailed information for each recommended video
           const recommendedVideos = await Promise.all(
             recommendedVideoIds.map(async (videoId) => await fetchVideo(videoId))
           );
 
-          // Update state with recommended videos
           setRecommendedVideos(recommendedVideos);
         }
       } catch (error) {
-        // Handle errors
-        console.error('Error:', error.message);
+        console.error('Error fetching recommendations:', error);
       }
     };
 
     fetchRecommendations();
   }, [user]);
 
-  // Organize videos by category
+  const handleNavigation = (direction, containerIndex) => {
+    const container = containerRefs.current[containerIndex];
+    const scrollAmount = container.clientWidth;
+    const currentScroll = container.scrollLeft;
+
+    if (direction === 'next') {
+      container.scrollTo({
+        left: currentScroll + scrollAmount,
+        behavior: 'smooth',
+      });
+    } else if (direction === 'prev') {
+      container.scrollTo({
+        left: currentScroll - scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   const videosByCategory = videos.reduce((acc, video) => {
-    const categories = video.categories || ['Uncategorized'];  // Use an array for categories
-    categories.forEach(category => {
+    const categories = video.categories || ['Uncategorized'];
+    categories.forEach((category) => {
       acc[category] = acc[category] || [];
       acc[category].push(video);
     });
@@ -61,13 +74,12 @@ const VideoPage = () => {
 
   return (
     <div>
-      <h1>Video Catalog</h1>
+      <h1 className="main-heading">Video Catalog</h1>
 
-      {/* Display Recommended Videos */}
       {recommendedVideos.length > 0 && (
         <div>
           <h2>Recommended Videos</h2>
-          <div className="flexContainer">
+          <div ref={(ref) => (containerRefs.current[0] = ref)} className="flexContainer">
             {recommendedVideos.map((video) => (
               <Link to={`/videos/${video._id}`} key={video._id} className="videoContainer">
                 <img src={video.thumbnailUrl} alt={video.title} className="thumbnail" />
@@ -77,14 +89,17 @@ const VideoPage = () => {
               </Link>
             ))}
           </div>
+          <div className="nav-arrows">
+            <button onClick={() => handleNavigation('prev', 0)}>{'<'}</button>
+            <button onClick={() => handleNavigation('next', 0)}>{'>'}</button>
+          </div>
         </div>
       )}
 
-      {/* Display Videos by Category */}
-      {Object.entries(videosByCategory).map(([category, categoryVideos]) => (
+      {Object.entries(videosByCategory).map(([category, categoryVideos], index) => (
         <div key={category}>
           <h2>{category}</h2>
-          <div className="flexContainer">
+          <div ref={(ref) => (containerRefs.current[index + 1] = ref)} className="flexContainer">
             {categoryVideos.map((video) => (
               <Link to={`/videos/${video._id}`} key={video._id} className="videoContainer">
                 <img src={video.thumbnailUrl} alt={video.title} className="thumbnail" />
@@ -93,6 +108,10 @@ const VideoPage = () => {
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="nav-arrows">
+            <button onClick={() => handleNavigation('prev', index + 1)}>{'<'}</button>
+            <button onClick={() => handleNavigation('next', index + 1)}>{'>'}</button>
           </div>
         </div>
       ))}
